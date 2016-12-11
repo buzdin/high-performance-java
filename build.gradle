@@ -1,7 +1,19 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.3.1"
+    }
+}
 
+repositories {
+    jcenter()
+    maven {
+        url "https://plugins.gradle.org/m2/"
     }
 }
 
@@ -16,6 +28,19 @@ idea {
     project {
         languageLevel = "1.9"
     }
+}
+
+apply plugin: "me.champeau.gradle.jmh"
+
+def jmhVersion = '1.17.2'
+
+dependencies {
+    jmh 'org.openjdk.jmh:jmh-core:' + jmhVersion
+    jmh 'org.openjdk.jmh:jmh-generator-annprocess:' + jmhVersion
+}
+
+jmh {
+    duplicateClassesStrategy = 'warn'
 }
 
 task wrapper(type: Wrapper) {
